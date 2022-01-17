@@ -90,8 +90,16 @@ const createMenu = (menu) => {
     pay: () => {
       let foodTotal = 0;
       let drinkTotal = 0;
-      Object.values(menu.food).forEach((price) => { foodTotal += price; });
-      Object.values(menu.drink).forEach((price) => { drinkTotal += price; });
+      consumption.forEach((item) => {
+        const foods = Object.keys(menu.food);
+        const drinks = Object.keys(menu.drink);
+        if (foods.includes(item)) {
+          foodTotal += menu.food[item];
+        }
+        if (drinks.includes(item)) {
+          drinkTotal += menu.drink[item];
+        }
+      });
       return (foodTotal + drinkTotal) * 1.1;
     },
   };

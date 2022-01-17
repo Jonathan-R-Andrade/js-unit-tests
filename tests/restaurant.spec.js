@@ -130,9 +130,10 @@ describe('10 - Implemente os casos de teste e a função `createMenu`', () => {
     objetoRetornado = createMenu(MENU);
     objetoRetornado.order('coxinha');
     objetoRetornado.order('agua');
-    objetoRetornado.order('coxinha');
+    objetoRetornado.order('agua');
+    objetoRetornado.order('sopa');
     // objetoRetornado.pay() // Retorno: somaDosPreçosDosPedidos
-    expect(objetoRetornado.pay()).toBeCloseTo(18.7, 2);
+    expect(objetoRetornado.pay()).toBeCloseTo(20.9, 2);
     // ```
     // Agora faça o PASSO 4 no arquivo `src/restaurant.js`.
   });
