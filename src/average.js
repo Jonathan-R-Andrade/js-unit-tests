@@ -14,15 +14,15 @@
 
 const average = (array) => {
   if (array.length === 0) return undefined;
-  let average = 0;
+  let returnAverage = 0;
   let isUndefined = false;
-  array.forEach(number => {
+  array.forEach((number) => {
     if (typeof number !== 'number') {
       isUndefined = true;
     }
-    average += number;
+    returnAverage += number;
   });
-  return isUndefined ? undefined : Math.round(average / array.length);
+  return isUndefined ? undefined : Math.round(returnAverage / array.length);
 };
 
 module.exports = average;
