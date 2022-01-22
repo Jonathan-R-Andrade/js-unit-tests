@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-
 /*
   Você é responsável por escrever o código do sistema de pedidos de um restaurante. Deve ser possível, através desse sistema, 
   cadastrar um menu. Dado que um menu foi cadastrado, o sistema deve disponibilizar um objeto através do qual se consegue:
@@ -24,7 +22,7 @@
 
   meuRestaurante.consumption // Retorno: ['coxinha']
 
-  meuRestaurante.pay() // Retorno: 3.9
+  meuRestaurante.pay() // Retorno: 4.29 (3.90+10%)
 
   Uma função createMenu retorna um objeto com as seguintes características:
   - Uma chave `fetchMenu` retorna o objeto que a função `createMenu` recebe por parâmetro. O menu tem sempre duas chaves, `food` e `drink`, no seguinte formato:
@@ -79,30 +77,23 @@
 // que percorre por todos os itens de `objetoRetornado.consumption`, soma o preço deles e retorna o valor somado acrescido de 10%.
 // DICA: para isso, você precisará percorrer tanto o objeto da chave `food` quanto o objeto da chave `drink`.
 
-const addItemInArray = (item, array) => array.push(item);
+const restaurant = { consumption: [] };
+
+const orderFromMenu = (request) => restaurant.consumption.push(request);
 
 const createMenu = (menu) => {
-  const consumption = [];
-  return {
-    fetchMenu: () => menu,
-    consumption,
-    order: (item) => { addItemInArray(item, consumption); },
-    pay: () => {
-      let foodTotal = 0;
-      let drinkTotal = 0;
-      consumption.forEach((item) => {
-        const foods = Object.keys(menu.food);
-        const drinks = Object.keys(menu.drink);
-        if (foods.includes(item)) {
-          foodTotal += menu.food[item];
-        }
-        if (drinks.includes(item)) {
-          drinkTotal += menu.drink[item];
-        }
-      });
-      return (foodTotal + drinkTotal) * 1.1;
-    },
+  restaurant.fetchMenu = () => menu;
+  restaurant.consumption = [];
+  restaurant.order = orderFromMenu;
+  restaurant.pay = () => {
+    let pay = 0;
+    restaurant.consumption.forEach((order) => {
+      pay += menu.food[order] ? menu.food[order] : 0;
+      pay += menu.drink[order] ? menu.drink[order] : 0;
+    });
+    return parseFloat((pay * 1.1).toFixed(2));
   };
+  return restaurant;
 };
 
 module.exports = createMenu;
